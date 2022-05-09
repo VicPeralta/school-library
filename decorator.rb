@@ -5,7 +5,7 @@ class Decorator < Nameable
     @nameable = nameable
     super()
   end
-  attr_reader :nameable
+  attr_accessor :nameable
 
   def correct_name
     @nameable.correct_name
