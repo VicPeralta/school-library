@@ -11,3 +11,5 @@ capitalized_person = CapitalizeDecorator.new(person)
 puts "Person name capitalized: #{capitalized_person.correct_name}"
 capitalized_trimmer_person = TrimmerDecorator.new(capitalized_person)
 puts "Person name capitalized and trimmed: #{capitalized_trimmer_person.correct_name}"
+puts "Original name of capitalized_trimmer_person: #{capitalized_trimmer_person.nameable.correct_name}"
+puts "Original name of capitalized_person: #{capitalized_person.nameable.correct_name}"
