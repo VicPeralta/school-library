@@ -5,12 +5,11 @@ class Book
     @author = author
     @rentals = []
   end
-  
+
   attr_reader :rentals
-  attr_accessor :title
-  attr_accessor :author
+  attr_accessor :title, :author
 
   def add_rental(rental)
-    @rentals = rental
+    @rentals.push(rental)
   end
 end
