@@ -2,8 +2,6 @@ module Menus
   def main_menu
     loop do
       print "\n\n"
-      puts 'Welcome to School Library App!'
-      print "\n"
       puts 'Please choose an option by entering a number:'
       puts '1.- List all books'
       puts '2.- List all people'
@@ -19,7 +17,7 @@ module Menus
 
   def create_person_menu
     loop do
-      puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
+      print 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
       option = gets.chomp
       return option.to_i if option.to_i >= 1 && option.to_i < 3
     end
