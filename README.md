@@ -7,6 +7,11 @@ A console application for a school library
 ## Built With
 
 - Ruby
+
+## Demo
+
+<img src="./library.gif/">
+
 ## Getting Started
 
 To get a local copy follow these simple example steps.  

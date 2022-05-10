@@ -112,7 +112,7 @@ class App
     @rentals.each do |rental|
       if rental.person.id == id.to_i
         print("Date: #{rental.date} ")
-        print("Book \"#{rental.book.title}\" by #{rental.book.author} ")
+        puts("Book \"#{rental.book.title}\" by #{rental.book.author} ")
       end
     end
   end
