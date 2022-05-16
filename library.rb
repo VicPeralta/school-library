@@ -4,6 +4,8 @@ require './teacher'
 require './book'
 require './classroom'
 
+# This class is responsible to handle adding objects and process user inputs.
+
 class Library
   def initialize
     @people = []
