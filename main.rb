@@ -1,7 +1,5 @@
 require './app'
 # Its responsability is to start the code and ask the user for the initial code
-# App class it responsible for creating and managing the different objects that make the application
-# Class Library, it is going to contain the book, people, rentals etc.
 
 def main
   app = App.new
