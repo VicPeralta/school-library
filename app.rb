@@ -1,99 +1,162 @@
-require './person'
-require './student'
-require './teacher'
-require './book'
-require './capitalize_decorator'
-require './trimmer_decorator'
-require './classroom'
+require './valid_date'
+require './library'
+require './menu'
+require './terminal_output'
+
+# This class is responsible to ask and validate user's information
 
 class App
   def initialize
-    @people = []
-    @books = []
-    @rentals = []
-    @classroom = Classroom.new('101')
+    @library = Library.new
+    @menu = Menu.new
   end
 
-  attr_reader :rentals, :people, :books
-
   def select_book_from_list
-    puts 'Select a book from the following list by number'
-    @books.each_with_index do |book, index|
-      puts "#{index}) Title: \"#{book.title}\" Author: #{book.author} "
+    terminal_puts 'Select a book from the following list by number'
+    @library.books.each_with_index do |book, index|
+      terminal_puts "#{index}) Title: \"#{book.title}\" Author: #{book.author} "
     end
     gets.chomp.to_i
   end
 
   def select_person_from_list
-    puts 'Select a person from the following list by number (not id)'
-    @people.each_with_index do |person, index|
-      print "#{index}) #{person.is_a?(Teacher) ? '[Teacher]' : '[Student]'} "
-      puts "Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    terminal_puts 'Select a person from the following list by number (not id)'
+    @library.people.each_with_index do |person, index|
+      terminal_print "#{index}) #{person.is_a?(Teacher) ? '[Teacher]' : '[Student]'} "
+      terminal_puts "Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
     gets.chomp.to_i
   end
 
   def can_create_rental?
-    if @books.empty?
-      puts 'There are no books for rentals'
+    if @library.books.empty?
+      terminal_puts 'There are no books for rentals'
       return false
     end
-    if @people.empty?
-      puts 'There are no people for rentals'
+    if @library.people.empty?
+      terminal_puts 'There are no people for rentals'
       return false
     end
     true
   end
 
-  def create_rental(date, index_person, index_book)
-    @rentals.push(Rental.new(date, @people[index_person], @books[index_book]))
-  end
-
   def list_rentals
-    if @rentals.empty?
-      puts 'No Rentals to show'
+    if @library.rentals.empty?
+      terminal_puts 'No Rentals to show'
       return
     end
-    print 'ID of person: '
+    terminal_print 'ID of person: '
     id = gets.chomp
-    puts 'Rentals'
-    @rentals.each do |rental|
+    terminal_puts 'Rentals'
+    @library.rentals.each do |rental|
       if rental.person.id == id.to_i
-        print("Date: #{rental.date} ")
-        puts("Book \"#{rental.book.title}\" by #{rental.book.author} ")
+        terminal_print("Date: #{rental.date} ")
+        terminal_puts("Book \"#{rental.book.title}\" by #{rental.book.author} ")
       end
     end
   end
 
-  def create_book(title, author)
-    @books.push(Book.new(title, author))
-  end
-
   def list_books
-    if @books.empty?
-      puts 'There are no books to show'
+    if @library.books.empty?
+      terminal_puts 'There are no books to show'
       return
     end
-    @books.each { |book| puts "Title: \"#{book.title}\", Author: #{book.author}" }
+    @library.books.each { |book| terminal_puts "Title: \"#{book.title}\", Author: #{book.author}" }
   end
 
   def list_people
-    if @people.empty?
-      puts 'There are no people to show'
+    if @library.people.empty?
+      terminal_puts 'There are no people to show'
       return
     end
-    @people.each do |person|
-      print '[Teacher] ' if person.is_a?(Teacher)
-      print '[Student] ' if person.is_a?(Student)
-      puts "Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+    @library.people.each do |person|
+      terminal_print '[Teacher] ' if person.is_a?(Teacher)
+      terminal_print '[Student] ' if person.is_a?(Student)
+      terminal_puts "Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
     end
   end
 
-  def add_teacher(age, name, specialization)
-    @people.push(Teacher.new(age, specialization, name))
+  def create_rental
+    return unless can_create_rental?
+
+    index_book = select_book_from_list
+    if index_book.negative? || index_book >= @library.books.length
+      terminal_puts 'Invalid selection'
+      return
+    end
+    index_person = select_person_from_list
+    if index_person.negative? || index_person >= @library.people.length
+      terminal_puts 'Invalid selection'
+      return
+    end
+    terminal_puts 'Date (yyyy/mm/dd):'
+    date = gets.chomp
+    if valid_date(date)
+      @library.add_rental(date, index_person, index_book)
+      terminal_puts 'Rental created successfully'
+      return
+    end
+    terminal_puts 'Invalid date'
   end
 
-  def add_student(age, name, permission)
-    @people.push(Student.new(age, @classroom, name, parent_permission: permission))
+  def create_book
+    terminal_print 'Title: '
+    title = gets.chomp
+    terminal_print 'Author: '
+    author = gets.chomp
+    @library.add_book(title, author)
+    terminal_puts 'Book created successfully'
+  end
+
+  def new_person
+    terminal_print 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
+    option = gets.chomp.to_i
+    return if option < 1 && option > 2
+
+    case option
+    when 1
+      age, name, permission = student_info
+      @library.create_student(age, name, parent_permission: permission)
+      terminal_puts 'Person created successfully'
+    when 2
+      age, name, specialization = teacher_info
+      @library.create_teacher(age, specialization, name)
+      terminal_puts 'Person created successfully'
+    end
+  end
+
+  def student_info
+    terminal_print 'Age: '
+    age = gets.chomp
+    terminal_print 'Name: '
+    name = gets.chomp
+    terminal_print 'Has parent permission? [Y/N]: '
+    permission = gets.chomp
+    [age, name, permission.downcase == 'y']
+  end
+
+  def teacher_info
+    terminal_print 'Age: '
+    age = gets.chomp
+    terminal_print 'Name: '
+    name = gets.chomp
+    terminal_print 'Specialization: '
+    specialization = gets.chomp
+    [age, name, specialization]
+  end
+
+  def run(option)
+    case option
+    when 1 then list_books
+    when 2 then list_people
+    when 3 then new_person
+    when 4 then create_book
+    when 5 then create_rental
+    when 6 then list_rentals
+    end
+  end
+
+  def main_menu
+    @menu.main_menu
   end
 end
