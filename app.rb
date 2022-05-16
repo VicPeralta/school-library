@@ -5,6 +5,7 @@ require './book'
 require './capitalize_decorator'
 require './trimmer_decorator'
 require './classroom'
+require './menu'
 
 class App
   def initialize
@@ -12,6 +13,7 @@ class App
     @books = []
     @rentals = []
     @classroom = Classroom.new('101')
+    @menu = Menu.new
   end
 
   attr_reader :rentals, :people, :books
@@ -95,5 +97,18 @@ class App
 
   def add_student(age, name, permission)
     @people.push(Student.new(age, @classroom, name, parent_permission: permission))
+  end
+
+  def main_menu
+    @menu.main_menu
+  end
+  
+  def run(option)
+    case option
+    when 1
+      list_books
+    when 2
+      list_people
+    end
   end
 end
