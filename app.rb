@@ -91,24 +91,60 @@ class App
     end
   end
 
-  def add_teacher(age, name, specialization)
-    @people.push(Teacher.new(age, specialization, name))
-  end
-
-  def add_student(age, name, permission)
-    @people.push(Student.new(age, @classroom, name, parent_permission: permission))
+  def create_person(person)
+    @people.push(person)
+    puts 'Person created successfully'
   end
 
   def main_menu
     @menu.main_menu
   end
-  
+
   def run(option)
     case option
     when 1
       list_books
     when 2
       list_people
+    when 3
+      new_person
     end
+  end
+
+  def new_person
+    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
+    option = gets.chomp.to_i
+    return option.to_i if option < 1 && option > 2
+
+    case option
+    when 1
+      age, name, permission = student_info
+      newperson = Student.new(age, @classroom, name, parent_permission: permission)
+      create_person(newperson)
+    when 2
+      age, name, specialization = teacher_info
+      newperson = Teacher.new(age, specialization, name)
+      create_person(newperson)
+    end
+  end
+
+  def student_info
+    print 'Age: '
+    age = gets.chomp
+    print 'Name: '
+    name = gets.chomp
+    print 'Has parent permission? [Y/N]: '
+    permission = gets.chomp
+    [age, name, permission.downcase == 'y']
+  end
+
+  def teacher_info
+    print 'Age: '
+    age = gets.chomp
+    print 'Name: '
+    name = gets.chomp
+    print 'Specialization: '
+    specialization = gets.chomp
+    [age, name, specialization]
   end
 end

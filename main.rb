@@ -8,18 +8,6 @@ def create_person_menu
   end
 end
 
-def create_person(app)
-  person_type = create_person_menu
-  if person_type == 2
-    age, name, specialization = teacher_info
-    app.add_teacher(age, name, specialization)
-  else
-    age, name, permission = student_info
-    app.add_student(age, name, permission)
-  end
-  puts 'Person created successfully'
-end
-
 def main_menu
   loop do
     print "\n\n"
@@ -34,26 +22,6 @@ def main_menu
     option = gets.chomp.to_i
     return option if option >= 1 && option < 8
   end
-end
-
-def teacher_info
-  print 'Age: '
-  age = gets.chomp
-  print 'Name: '
-  name = gets.chomp
-  print 'Specialization: '
-  specialization = gets.chomp
-  [age, name, specialization]
-end
-
-def student_info
-  print 'Age: '
-  age = gets.chomp
-  print 'Name: '
-  name = gets.chomp
-  print 'Has parent permission? [Y/N]: '
-  permission = gets.chomp
-  [age, name, permission.downcase == 'y']
 end
 
 def create_book(app)
@@ -127,6 +95,7 @@ def main
   loop do
     option = app.main_menu
     break if option == 7
+
     app.run(option)
   end
   puts 'Thank you for using this App!'

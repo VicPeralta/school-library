@@ -14,12 +14,4 @@ class Menu
       return option if option >= 1 && option < 8
     end
   end
-
-  def create_person_menu
-    loop do
-      print 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
-      option = gets.chomp.to_i
-      return option.to_i if option >= 1 && option < 3
-    end
-  end
 end
