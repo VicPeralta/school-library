@@ -5,6 +5,7 @@ require './book'
 require './capitalize_decorator'
 require './trimmer_decorator'
 require './classroom'
+require './valide_date'
 require './menu'
 
 class App
@@ -47,10 +48,6 @@ class App
     true
   end
 
-  def create_rental(date, index_person, index_book)
-    @rentals.push(Rental.new(date, @people[index_person], @books[index_book]))
-  end
-
   def list_rentals
     if @rentals.empty?
       puts 'No Rentals to show'
@@ -65,10 +62,6 @@ class App
         puts("Book \"#{rental.book.title}\" by #{rental.book.author} ")
       end
     end
-  end
-
-  def create_book(title, author)
-    @books.push(Book.new(title, author))
   end
 
   def list_books
@@ -96,19 +89,36 @@ class App
     puts 'Person created successfully'
   end
 
-  def main_menu
-    @menu.main_menu
+  def create_rental
+    return unless can_create_rental?
+
+    index_book = select_book_from_list
+    if index_book.negative? || index_book >= books.length
+      puts 'Invalid selection'
+      return
+    end
+    index_person = select_person_from_list
+    if index_person.negative? || index_person >= people.length
+      puts 'Invalid selection'
+      return
+    end
+    puts 'Date (yyyy/mm/dd):'
+    date = gets.chomp
+    if valid_date(date)
+      @rentals.push(Rental.new(date, @people[index_person], @books[index_book]))
+      puts 'Rental created successfully'
+      return
+    end
+    puts 'Invalid date'
   end
 
-  def run(option)
-    case option
-    when 1
-      list_books
-    when 2
-      list_people
-    when 3
-      new_person
-    end
+  def create_book
+    print 'Title: '
+    title = gets.chomp
+    print 'Author: '
+    author = gets.chomp
+    @books.push(Book.new(title, author))
+    puts 'Book created successfully'
   end
 
   def new_person
@@ -146,5 +156,20 @@ class App
     print 'Specialization: '
     specialization = gets.chomp
     [age, name, specialization]
+  end
+
+  def run(option)
+    case option
+    when 1 then list_books
+    when 2 then list_people
+    when 3 then new_person
+    when 4 then create_book
+    when 5 then create_rental
+    when 6 then list_rentals
+    end
+  end
+
+  def main_menu
+    @menu.main_menu
   end
 end
