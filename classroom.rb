@@ -19,7 +19,7 @@ class Classroom
   def to_json(*args)
     {
       JSON.create_id => self.class.name,
-      'label' => [@label]
+      'label' => @label
     }.to_json(*args)
   end
 
