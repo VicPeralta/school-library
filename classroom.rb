@@ -15,4 +15,15 @@ class Classroom
     # the classroom is set in the student as well
     student.classroom = self
   end
+
+  def to_json(*args)
+    {
+      JSON.create_id => self.class.name,
+      'label' => @label
+    }.to_json(*args)
+  end
+
+  def self.json_create(object)
+    new(*object['label'])
+  end
 end
