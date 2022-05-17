@@ -1,4 +1,5 @@
 require './person'
+require 'pry'
 
 class Student < Person
   def initialize(age, classroom, name = 'Unknown', parent_permission: true)
@@ -14,5 +15,22 @@ class Student < Person
 
   def play_hooky
     '¯\(ツ)/¯'
+  end
+
+  def to_json(*args)
+    {
+      JSON.create_id => self.class.name,
+      # 'classroom' => [@classroom],
+      'data' => [@age, @classroom, @name, @parent_permission]
+    }.to_json(*args)
+  end
+
+  def self.json_create(object)
+    puts object
+    puts object['data']
+    classroom = object['classroom']
+    age, name = object['data']
+    new(age, Classroom.json_create(classroom), name)
+    # new(*object['data'])
   end
 end
