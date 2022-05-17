@@ -3,6 +3,7 @@ require './student'
 require './teacher'
 require './book'
 require './classroom'
+require 'json'
 
 # This class is responsible to handle adding objects and process user inputs.
 
@@ -12,9 +13,20 @@ class Library
     @books = []
     @rentals = []
     @classroom = Classroom.new('101')
+    load_data
   end
   attr_reader :rentals, :people, :books
 
+  def load_data
+    puts 'Loading data'
+    @books = JSON.parse(File.read('books.json'), create_additions: true) if File.exist?('books.json')
+    puts @books
+  end
+
+  def save_data
+    File.write('books.json', @books.to_json) if !@books.empty?
+  end
+  
   def add_rental(date, index_person, index_book)
     @rentals.push(Rental.new(date, @people[index_person], @books[index_book]))
   end

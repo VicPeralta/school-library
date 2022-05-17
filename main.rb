@@ -10,6 +10,7 @@ def main
 
     app.run(option)
   end
+  app.save_data
   puts 'Thank you for using this App!'
 end
 
