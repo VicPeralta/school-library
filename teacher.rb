@@ -1,5 +1,5 @@
 require './person'
-
+require 'json'
 class Teacher < Person
   def initialize(age, specialization, name = 'Unknown', parent_permission: true)
     @specialization = specialization
@@ -8,5 +8,19 @@ class Teacher < Person
 
   def can_use_services?
     true
+  end
+
+  def to_json(*args)
+    {
+      JSON.create_id  => self.class.name,
+      'a'             => [ @age, @specialization, @name ]
+    }.to_json(*args)
+  end
+
+  def self.json_create(object)
+    puts object
+    unless object['json_class'] != 'Teacher'
+      new(*object['a'])
+    end
   end
 end
