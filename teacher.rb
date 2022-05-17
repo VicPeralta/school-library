@@ -18,7 +18,7 @@ class Teacher < Person
   end
 
   def self.json_create(object)
-    puts object
+    puts 'Teacher'
     unless object['json_class'] != 'Teacher'
       new(*object['a'])
     end

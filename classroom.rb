@@ -24,6 +24,7 @@ class Classroom
   end
 
   def self.json_create(object)
+    puts 'Classroom'
     new(*object['a'])
   end
 end

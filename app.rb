@@ -148,10 +148,6 @@ class App
   def save_data
     @library.save_data
   end
-
-  def load_data
-    @library.load_data
-  end
   
   def run(option)
     case option

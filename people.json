@@ -1,1 +1,1 @@
-[{"json_class":"Student","data":["18","Ross",{"parent_permission":false}],"classroom":[{"json_class":"Classroom","a":["101"]}]}]
+[{"json_class":"Student","data":["18","Ross",true],"classroom":[{"json_class":"Classroom","a":["101"]}]},{"json_class":"Teacher","a":["50","All","Victor"]}]

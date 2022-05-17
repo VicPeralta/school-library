@@ -13,6 +13,7 @@ class Library
     @books = []
     @rentals = []
     @classroom = Classroom.new('101')
+    load_data
   end
   attr_reader :rentals, :people, :books
 
@@ -21,19 +22,15 @@ class Library
   end
 
   def save_data
-    if !@people.empty? then save_people_data end
+    File.write('people.json', @people.to_json) if @people.empty? == false
+    File.write('books.json', @books.to_json) if @books.empty? == false
   end
 
   def load_data
-    return if !File.exists?('people.json')
-    @people = JSON.parse(File.read('people.json'), create_additions: true)
+    @people = JSON.parse(File.read('people.json'), create_additions: true) if File.exist?('people.json')
+    @books = JSON.parse(File.read('books.json'), create_additions: true) if File.exist?('books.json')
   end
 
-  def save_people_data
-    file = File.open('people.json', 'w')
-    file.write @people.to_json
-    file.close
-  end
 
   def add_book(title, author)
     @books.push(Book.new(title, author))
