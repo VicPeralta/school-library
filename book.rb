@@ -13,15 +13,26 @@ class Book
     @rentals.push(rental)
   end
 
-  def to_json(*args)
-    {
-      'data'          => [ title, author ]
-    }.to_json(*args)
+  # def to_json(*args)
+  #   {
+  #     'data'          => [ title, author ]
+  #   }.to_json(*args)
+  # end
+
+  def to_json(*_args)
+    JSON.dump({
+                title: @title,
+                author: @author
+              })
   end
 
-  def self.json_create(object)
-    puts 'Books'
-    puts object
-    new(*object['data'])
+  # def self.json_create(object)
+  #   puts 'Books'
+  #   puts object
+  #   new(*object['data'])
+  # end
+
+  def self.from_json(data)
+    new(data['title'], data['author'])
   end
 end

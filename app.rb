@@ -144,9 +144,11 @@ class App
     specialization = gets.chomp
     [age, name, specialization]
   end
+
   def save_data
     @library.save_data
   end
+
   def run(option)
     case option
     when 1 then list_books

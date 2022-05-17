@@ -18,15 +18,18 @@ class Library
   attr_reader :rentals, :people, :books
 
   def load_data
-    puts 'Loading data'
-    @books = JSON.parse(File.read('books.json'), create_additions: true) if File.exist?('books.json')
-    puts @books
+    data = JSON.parse File.read './books.json' if File.exist? './books.json'
+    data.each do |book|
+      @books.push(Book.from_json(book))
+    end
   end
 
   def save_data
-    File.write('books.json', @books.to_json) if !@books.empty?
+    string = "[#{@books.map(&:to_json).join(',')}]"
+
+    File.write('books.json', string)
   end
-  
+
   def add_rental(date, index_person, index_book)
     @rentals.push(Rental.new(date, @people[index_person], @books[index_book]))
   end
