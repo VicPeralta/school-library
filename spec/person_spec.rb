@@ -1,8 +1,18 @@
 require './person'
+require './rental'
+require './book'
 
 RSpec.describe Person do
   before :each do
     @person = Person.new(18, 'jose')
+  end
+
+  it 'Add a rental to person' do
+    expect(@person.rentals.length).to be == 0
+    book = Book.new('Ruby Programming', 'Victor')
+    rental = Rental.new('2022/05/18', @person, book)
+    @person.add_rental(rental)
+    expect(@person.rentals.length).to be == 2
   end
 
   it 'Create an instance of person class' do
