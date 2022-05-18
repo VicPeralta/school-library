@@ -1,5 +1,4 @@
 require './person'
-require 'pry'
 
 class Student < Person
   def initialize(age, classroom, name = 'Unknown', id = nil, parent_permission: true)

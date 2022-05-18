@@ -34,6 +34,19 @@ To get a local copy follow these simple example steps.
 - Twitter: [@VicPeralta](https://twitter.com/VicPeralta)
 - Linkedin: [@VicPeralta](https://www.linkedin.com/in/vicperalta/)
 
+👤 **Andres Condezo**
+- GitHub: [@andres-condezo](https://github.com/andres-condezo)
+- Twitter: [@andres_condezo](https://twitter.com/andres_condezo)
+- Linkedin: [@andres-condezo](https://www.linkedin.com/in/andres-condezo/)
+
+👤 **Behnam Aghaali**
+
+- GitHub: [https://github.com/Behnam1369](https://github.com/Behnam1369)
+- LinkedIn: [https://www.linkedin.com/in/behnam-aghaali](https://www.linkedin.com/in/behnam-aghaali)
+- Twitter: [https://twitter.com/behnamagh1369](https://twitter.com/behnamagh1369)
+- Email: [behnam.aghaali@yahoo.com](mailto:behnam.aghaali@yahoo.com)
+
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
