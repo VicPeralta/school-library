@@ -24,6 +24,6 @@ RSpec.describe Person do
     @student = Student.new('10', Classroom.new('1B'), 'Omar', 53, parent_permission: true)
     json = JSON.generate(@student)
     json = @student.to_json
-    expect(json).to eq '{"json_class":"Student","data":["10",{"json_class":"Classroom","label":"1B"},"Omar",53,{"parent_permission":true}]}'
+    expect(json).to eq '{"json_class":"Student","data":["10",{"json_class":"Classroom","label":"1B"},"Omar",53,true]}'
   end
 end

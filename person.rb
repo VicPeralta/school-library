@@ -20,7 +20,6 @@ class Person < Nameable
 
   def can_use_services?
     of_age? || parent_permission
-    correct_name
   end
 
   def add_rental(rental)
