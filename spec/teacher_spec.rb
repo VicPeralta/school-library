@@ -14,6 +14,10 @@ RSpec.describe Teacher do
     expect(teacher).to be_an_instance_of(Teacher)
   end
 
+  it 'Check if teacher can use service' do
+    expect(teacher.can_use_services?).to be_truthy
+  end
+
   it 'Specialization field should not be accessible ' do
     expect { teacher.specialization }.to raise_error(NoMethodError)
   end

@@ -25,4 +25,16 @@ RSpec.describe Student do
     json = JSON.generate(@student)
     expect(json).to eq '{"json_class":"Student","data":["10",{"json_class":"Classroom","label":"1B"},"Omar",53,true]}'
   end
+
+  it 'Creating a student instance from a json string' do
+    student = JSON.parse(
+      '{"json_class":"Student","data":["10",{"json_class":"Classroom","label":"1B"},"Omar",53,true]}',
+      create_additions: true
+    )
+    expect(student).to be_an_instance_of(Student)
+  end
+
+  it 'Playing hooky' do
+    expect(@student.play_hooky).to be == '¯\(ツ)/¯'
+  end
 end
