@@ -1,9 +1,20 @@
 require './book'
+require './rental'
+require './student'
+require './classroom'
 require 'json'
 
 RSpec.describe Book do
   before :each do
     @book = Book.new('Ruby Programming', 'Victor')
+  end
+
+  it 'Add a rental to book' do
+    classroom = Classroom.new('101')
+    expect(@book.rentals.length).to be == 0
+    rental = Rental.new('2022/05/18', Student.new(23, classroom, 'Victor'), @book)
+    @book.add_rental(rental)
+    expect(@book.rentals.length).to be == 2
   end
 
   it 'Create an instance of Book' do
