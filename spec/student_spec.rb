@@ -3,7 +3,7 @@ require './student'
 require './classroom'
 require 'json'
 
-RSpec.describe Person do
+RSpec.describe Student do
   before :each do
     @student = Student.new(10, Classroom.new('1B'), 'Omar')
   end
